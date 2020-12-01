@@ -1,1 +1,287 @@
-<h1>Welcome to the World.<h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>BMI 計算機</title>
+
+  <link rel="stylesheet" href="../library/css/bootstrap.css">
+  <script src="../library/js/jquery-2.2.4.js"></script>
+  <script src="../library/js/bootstrap.min.js"></script>
+  <style>
+    .container-fluid-full {
+      padding-right: 0px;
+      padding-left: 0px;
+      margin-right: 0px;
+      margin-left: 0px;
+    }
+
+    .box{
+      width: 350px;
+      padding-left: 60px;
+      padding-top: 5px;
+    }
+
+    .bmiResult{
+      width: 350px;
+      padding-left: 60px;
+      padding-top: 20px;
+    }
+    .title{
+      font-weight: normal;
+      padding-left: 20px;
+      padding-right: 20px;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+      border-bottom-color: rgb(162, 169, 177);
+      margin-block-start: 0.67em;
+      margin-block-end: 0.67em;
+    }
+    .content{
+      padding-left: 45px;
+      padding-right: 45px;
+      margin-bottom: 30px;
+    }
+    .formula{
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+    .thanks{
+      padding-left: 145px;
+    }
+
+  </style>
+
+  <script>
+
+    // BMI計算公式
+    $(function(){
+      $('#calc').click(function(){
+        var h   = $('#height').val(),
+            w   = $('#weight').val(),
+            age = $('#age').val(),
+            sex = $('#sex').val();
+
+
+        if(h == ''){
+          alert ('身高不能為空喔');
+        }else if (h > 3){
+          alert ('身高單位為公尺喔，請重新輸入');
+        }else if (w == ''){
+          alert ('體重不能為空喔');
+        }else if (age == ''){
+          alert ('年齡不能為空喔');
+        }else if (sex == '-1'){
+          alert ('記得選擇性別');
+        }else
+          // bmi計算結果
+          bmi = w / (h * h);
+          $('#result').val(formatFloat(bmi,2));
+          $('#height').val('');
+          $('#weight').val('');
+          $('#age').val('');
+          $('#sex').val('');
+
+          // bmi體位
+          if(10 < bmi & bmi < 18.5){
+            $('#bmiBody').val('體重過輕');
+          }else if(18.5 <= bmi & bmi < 24){
+            $('#bmiBody').val('健康體位');
+          }else if(24   <= bmi & bmi < 27){
+            $('#bmiBody').val('過重');
+          }else if(27   <= bmi & bmi < 30){
+            $('#bmiBody').val('輕度肥胖');
+          }else if(30   <= bmi & bmi < 35){
+            $('#bmiBody').val('中度肥胖');
+          }else if(35   <= bmi & bmi < 50){
+            $('#bmiBody').val('重度肥胖');
+          }else
+            alert ('請確認輸入的數值，並重新輸入');
+
+            standard = (1.2 * bmi) + (0.23 * age - 5.4) - (10.8 * sex)
+            $('#bmiStandard').val(formatFloat(standard,2))
+            if(sex == 1 & standard >= 25){
+              $('#bmiStandardResult').val('身體肥胖');
+            }else if(sex == 1 & standard < 25){
+              $('#bmiStandardResult').val('正常');
+            }else if(sex == 0 & standard >= 32){
+              $('#bmiStandardResult').val('身體肥胖');
+            }else if(sex == 0 & standard < 32){
+              $('#bmiStandardResult').val('正常');
+            }else
+              $('#bmiStandardResult').val('數據異常');
+
+      });
+    });
+
+    // 四捨五入function
+    function formatFloat(num, pos)
+    {
+      var size = Math.pow(10, pos);
+      return Math.round(num * size) / size;
+    }
+  </script>
+
+</head>
+
+<body>
+  <div class="container-fluid-full">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">BMI計算機</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://hahow.in/courses/" target="_blank">About</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="title">
+      <h4>什麼是體脂肪率?</h4>
+    </div>
+    <p class="content">
+      1. <strong>體脂肪率</strong>，又稱<strong>體脂百分比</strong>、<strong>體脂率</strong>，是將脂肪含量用其占總體重的百分比的形式表示，一般用於動物，但近年開始有在人體的應用。
+      <br>
+      2. 一般而言，<font color="#a55858">女性的<strong>必需脂肪</strong>(所謂必需脂肪就是身體要<u>維持生命</u>及<u>繁殖</u>所需的脂肪)比例會比男性為高</font>，因為需要生育、餵哺及其他由荷爾蒙調節的身體機能。
+      <br>
+      3. 對於男性，必需脂肪一般佔體重的12～15%，而女性約為10～13%。儲存脂肪由脂肪組織內所累積的脂肪組成，當中部份位於胸腔及腹部，用以保護身體的內臟。
+    </p>
+
+    <div class="title">
+      <h4>BMI值是什麼? 如何計算?</h4>
+    </div>
+    <p class="content">
+      世界衛生組織建議以<font color="#a55858">身體質量指數（Body Mass Index, BMI）</font>來<strong>衡量肥胖程度</strong>，其<u>計算公式是以體重（公斤）除以身高（公尺）的平方</u>。 國民健康署建議我國成人BMI應維持在18.5（kg/m2）及24（kg/m2）之間，太瘦、過重或太胖皆有礙健康。 研究顯示，體重過重或是肥胖（BMI≧24）為糖尿病、心血管疾病、惡性腫瘤等慢性疾病的主要風險因素；而過瘦的健康問題，則會有營養不良、骨質疏鬆、猝死等健康問題。
+      <br>
+        <span style="font-size: 20px" class="formula">
+        BMI = [體重(kg)] / [身高(m)]平方
+        </span>
+    </p>
+
+    <div class="title">
+      <h4>標準值是什麼? 如何計算?</h4>
+    </div>
+    <p class="content">
+      一般認為男性體脂≥25%，女性≥32%是診斷為肥胖的標準。體脂百分比可通過以下公式用BMI（克托萊指數，身體質量指數）的數值【（體重/2.205）/（身高/39.37）】進行計算：
+      <br>
+        <span style="font-size: 20px" class="formula">
+          體脂(%) = (1.2 x BMI) + (0.23 x 年齡 - 5.4) - (10.8 x 性別)
+        </span>
+    </p>
+
+
+    <div class="title">
+      <h4>工具操作說明</h4>
+    </div>
+    <p class="content">
+      步驟說明： <br>
+      1. 請輸入身高(注意單位為公尺)，體重(注意單位為公斤)，年齡(整數)，選擇性別。 <br>
+      2. 輸入完成後，點擊"計算"，將會得到BMI值與體脂率。 <br>
+      3. 可通過BMI得知身體狀況，有三種可能體重過輕、健康體重、體位異常。 <br>
+      4. 可通過體脂率得知結果，男性體脂≥25%或女性≥32%是診斷為肥胖的標準。
+    </p>
+
+    <div class="row">
+      <div class="col-md-4 box">
+        <div class="form-group">
+          <label for="height">請輸入身高</label>
+          <input type="number" class="form-control" id="height" placeholder="單位:公尺">
+        </div>
+      </div>
+      <div class="col-md-4 box">
+        <div class="form-group">
+          <label for="weight">請輸入體重</label>
+          <input type="number" class="form-control" id="weight" placeholder="單位:公斤">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 box">
+        <div class="form-group">
+          <label for="age">請輸入年齡</label>
+          <input type="number" class="form-control" id="age" placeholder="整數">
+        </div>
+      </div>
+      <div class="col-md-4 box">
+        <div class="form-group">
+          <label for="sex">請選擇性別</label>
+            <select type="number" class="form-control" id="sex" name="">
+              <option value="-1" id="none"></option>
+              <option value="1" id="male">男</option>
+              <option value="0" id="female">女</option>
+            </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- 計算按鈕 -->
+      <div class="row">
+        <div class="col-md-4 box">
+          <div class="form-group">
+            <button type="submit" class="btn btn-default" id="calc">點我計算</button>
+          </div>
+        </div>
+
+      <br>
+
+      <!-- BMI計算結果 -->
+      <div class="col-md-4 bmiResult">
+        <div class="form-group">
+          <label for="result">您的BMI是</label>
+          <input type="number" class="form-control" id="result" readonly="ture">
+        </div>
+      </div>
+
+      <!-- BMI測驗結果 -->
+      <div class="col-md-4 bmiResult">
+        <div class="form-group">
+          <label for="bmiBody">根據BMI值，您的體位為</label>
+          <input type="string" class="form-control" id="bmiBody" readonly="ture">
+        </div>
+      </div>
+
+      <!-- BMI標準值 -->
+      <div class="col-md-4 bmiResult">
+        <div class="form-group">
+          <label for="bmiStandard">您的標準值是</label>
+          <input type="number" class="form-control" id="bmiStandard" readonly="ture">
+        </div>
+      </div>
+
+      <!-- 標準值結果 -->
+      <div class="col-md-4 bmiResult">
+        <div class="form-group">
+          <label for="bmiStandardResult">根據標準值，顯示結果為</label>
+          <input type="string" class="form-control" id="bmiStandardResult" readonly="ture">
+        </div>
+      </div>
+
+      <br><br>
+        <div class="col-md-4 thanks">
+          <label for="">感謝您的使用!</label>
+        </div>
+      <br><br>
+
+    </div>
+
+
+
+  </div>
+
+</body>
+</html>
